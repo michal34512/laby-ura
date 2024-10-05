@@ -52,8 +52,8 @@ def zad33():
     # W zaleności co przyjmiemy za zmienne stanu to równania stanu mogą wyglądać inaczej. Najlepiej jest za 
     # zmienne stanu przyjąć wielkości które mają odzwierciedlenie w rzeczywistości (np 'q' i 'I')
 
-    # Da się to zrobić, trzebaby zrobić transpozycję macierzy A, zamienić miejscami wartości B i D (odpowiada to zamianie miejscami zmiennych stanu), 
-    # 
+    # Da się to zrobić, trzebaby zrobić transpozycję macierzy A, zamienić miejscami 
+    # wartości B i D (odpowiada to zamianie miejscami zmiennych stanu).
 if __name__ == "__main__":
     zad31()
     zad32()
