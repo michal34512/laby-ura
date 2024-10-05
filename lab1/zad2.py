@@ -44,6 +44,7 @@ if __name__ == "__main__":
     zad21()
     zad23()
     zad24()
+    plt.legend()
     plt.show()
     # odpowiedzi skokowe się pokrywają (odeint może delikatnie odstawać w zależności od rozdzielczości czasu)
     # zastosowane przekształcenia nie zmianiają charakteru wyjścia systemu
