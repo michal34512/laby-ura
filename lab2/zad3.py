@@ -68,7 +68,7 @@ def zad33():
     D = 0
     
     K = np.array(signal.place_poles(A, B, desired_poles).gain_matrix)
-    K = np.array([[10, 0, 0]])
+    #K = np.array([[10, 0, 0]])
     
     current_A = (A - B @ K)
     print(f"Bieguny nowej macierzy A: {np.linalg.eigvals(current_A)}") # Bieguny teraz są dokładnie w tym miejscu co chcieliśmy żeby były
@@ -87,5 +87,5 @@ def zad33():
     # • Wpływają zgodnie z równaniem wyzmaczonym w zadaniu 3.1 (miejsca zerowe wielomianu to miejsca biegunów)
 
 if __name__ == "__main__":
-    zad31()    
+    zad33()    
    
