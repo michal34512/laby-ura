@@ -87,5 +87,5 @@ def zad33():
     # • Wpływają zgodnie z równaniem wyzmaczonym w zadaniu 3.1 (miejsca zerowe wielomianu to miejsca biegunów)
 
 if __name__ == "__main__":
-    zad33()    
+    zad31()    
    

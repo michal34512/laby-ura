@@ -66,6 +66,7 @@ def zad21_rys2():
     Bs = getBs(B)
     Pinv = getPinv(As, Bs, A, B)
     plot_all_state_vars_Pinv(As, Bs, Pinv , utype = 0)
+    print(As)
     plot_all_state_vars_Pinv(A, B, None, utype = 0)
     # jest sterowalny
 
@@ -84,6 +85,7 @@ def zad21_rys4():
     Bs = getBs(B)
     Pinv = getPinv(As, Bs, A, B)
     plot_all_state_vars_Pinv(As, Bs, Pinv , utype = 0)
+    print(As)
     plot_all_state_vars_Pinv(A, B, None, utype = 0)
     # jest sterowalny
 
@@ -106,6 +108,7 @@ def zad21_rys1():
     Bs = getBs(B)
     Pinv = getPinv(As, Bs, A, B)
     plot_all_state_vars_Pinv(As, Bs, Pinv , utype = 0)
+    print(As)
     plot_all_state_vars_Pinv(A, B, None, utype = 0)
     # jest niesterowalny
 
@@ -125,12 +128,12 @@ def zad21_rys3():
     plot_all_state_vars_Pinv(As, Bs, Pinv , utype = 0)
     plot_all_state_vars_Pinv(A, B, None, utype = 0)
     print(f"Rank before: {calman_theorem_rank(A, B)}")
+    print(As)
     print(f"Rank after: {calman_theorem_rank(As, Bs)}")
     # nie jest sterowalny
 
 if __name__ == "__main__":
-    zad21_rys4()
-    # Dla układów niesterowalnych idzie wyznaczyć postać sterowalną. Wtedy stają się sterowalne
+    zad21_rys2()
     # Opisują obiekty w różny sposób ale efekt jest ten sam
     # Przebiegi są takie same, to oznacza że do projektowania układu regulacji możemy użyć postaci sterowalnej równań stanu
     

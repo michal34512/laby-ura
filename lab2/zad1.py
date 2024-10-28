@@ -69,7 +69,7 @@ def zad11_3():
 
     ##### State-equasions #####
     A = np.array([[0, 1/L1, 0, 0],[-1/C1, -1/(R*C1), 0, -1/(R*C1)],[0, 0, 0, 1/L2], [0, -1/(R*C2), -1/C2, -1/(R*C2)]])
-    B = np.array([[0],[-1/(R*C1)],[0],[-1/(R*C2)]])
+    B = np.array([[0],[1/(R*C1)],[0],[1/(R*C2)]])
     
     print(f"Rank: {calman_theorem_rank(A, B)}")
     plot_all_state_vars(A,B, 2)
@@ -91,5 +91,5 @@ def zad11_4():
     # jest sterowalny
 
 if __name__ == "__main__":
-    zad11_4()
+    zad11_2()
    
