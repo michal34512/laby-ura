@@ -37,9 +37,9 @@ def zad2():
     L1 = 2
     L2 = 0.5
     yd = 3
-    kp = 1
-    ki = 4
-    kd = 0.1
+    kp = 75.5
+    ki = 0
+    kd = 0
 
     def model(xe, t): # e_dot = -y_dot
         x1, x2, x3, e_int = xe
@@ -53,7 +53,7 @@ def zad2():
         x3_dot = x1*(1/C1) + x2 * (-1/C1)
 
         return [x1_dot, x2_dot, x3_dot, e]
-    t = np.linspace(0, 25, 500)
+    t = np.linspace(0, 20, 50000)
     x0 = np.array([0.0, 0.0, 0.0, 0.0])
     sol = odeint(model, x0, t)
     x1, x2, x3, e_int = sol.T
@@ -67,4 +67,11 @@ def zad2():
     plt.title('Symulacja układu równań stanu')
     plt.legend()
     plt.show()
+
+# Pkt. 3
+    # - pochodna = układ bardziej dynamiczny
+    #   całka = sprowadzanie uchybu do zera / przeregulowania
+    #   proporcja = początkowy "kop"
+    # - zerowy uchyb nie jest możliwy w przypadku regulatora typu P (wzmocnienei kp musiało by być nieskończone)
+    # - 
 zad2()
