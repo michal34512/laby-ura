@@ -29,11 +29,11 @@ def main():
     #analityczne
     def J_a(t):
         return t**3+t+1
-    y_a = J_a(t)
+    y_a = J_a(m.time)
     
     plt.figure(figsize=(10, 5))
     plt.plot(m.time, x.value, label="Rozwiązanie numeryczne x(t)")
-    plt.plot(len(y_a), y_a, label="Analitycznie x(t)")
+    plt.plot(m.time, y_a, label="Analitycznie x(t)")
     plt.xlabel('Czas t')
     plt.ylabel('Wartość')
     plt.legend()
