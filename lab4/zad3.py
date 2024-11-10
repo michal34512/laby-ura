@@ -2,14 +2,14 @@ import numpy as np
 from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 
-def calc_P(kp, T):
-    return (kp/2, 0, 0)
-def calc_PI(kp, T):
-    return(0.45*kp, 0.54*kp/T, 0)
-def calc_PD(kp, T):
-    return(0.8*kp, 0, 0.1*kp*T)
-def calc_PID(kp, T):
-    return(0.6*kp, 1.2*kp/T, 0.075*kp*T)
+def calc_P(ku, T):
+    return (ku/2, 0, 0)
+def calc_PI(ku, T):
+    return(0.45*ku, 0.54*ku/T, 0)
+def calc_PD(ku, T):
+    return(0.8*ku, 0, 0.1*ku*T)
+def calc_PID(ku, T):
+    return(0.6*ku, 1.2*ku/T, 0.075*ku*T)
 
 def zad1():
     # Niekończące sie oscylacje dla kp = 75.5
@@ -44,7 +44,7 @@ def plot_PID(nastawy):
         x3_dot = x1*(1/C1) + x2 * (-1/C1)
 
         return [x1_dot, x2_dot, x3_dot, e]
-    t = np.linspace(0, 100, 50000)
+    t = np.linspace(0, 20, 50000)
     x0 = np.array([0.0, 0.0, 0.0, 0.0])
     sol = odeint(model, x0, t)
     x1, x2, x3, e_int = sol.T
@@ -61,6 +61,12 @@ def plot_PID(nastawy):
 def zad2():
     g_kp = 75.5
     g_T = 1.61
+
+    print(calc_P(g_kp, g_T)) # (37.75, 0, 0)
+    print(calc_PI(g_kp, g_T)) # (33.975, 25.32298136645963, 0)
+    print(calc_PD(g_kp, g_T)) # (60.400000000000006, 0, 12.155500000000002)
+    print(calc_PID(g_kp, g_T)) # (45.3, 56.273291925465834, 9.116625)
+    
     plot_PID(calc_P(g_kp, g_T))
     plot_PID(calc_PI(g_kp, g_T))
     plot_PID(calc_PD(g_kp, g_T))
