@@ -103,18 +103,24 @@ def zad2():
     sol = odeint(model, x0, t)
     x1, x2, x3, e_int = sol.T
     y = x2
+    e = y - yd
 
     ts = czas_ustalania(y, t, yd)
     print(f"Czas ustalania: {ts:.2f} sekund" if ts is not None else "Czas ustalania nie został osiągnięty.")
     
 
     plt.figure(figsize=(10, 5))
-    # plt.plot(t, x1, label='x1(t)')
-    # plt.plot(t, x2, label='x2(t)')
-    # plt.plot(t, x3, label='x3(t)')
     plt.plot(t, y, label='y(t)', linestyle='--')
     plt.xlabel('Czas t')
     plt.ylabel('Wartości')
+    plt.title('Symulacja układu równań stanu')
+    plt.legend()
+    plt.show()
+
+    plt.figure(figsize=(10, 5))
+    plt.plot(t, e, label='e(t)', linestyle='--')
+    plt.xlabel('Czas t')
+    plt.ylabel('Uchyb')
     plt.title('Symulacja układu równań stanu')
     plt.legend()
     plt.show()
