@@ -29,7 +29,7 @@ def plot_PID(nastawy):
     C1 = 0.5
     L1 = 2
     L2 = 0.5
-    yd = 1
+    yd = 3
     (kp, ki, kd) = nastawy
 
     def model(xe, t): # e_dot = -y_dot
@@ -58,6 +58,15 @@ def plot_PID(nastawy):
     plt.title('Symulacja układu równań stanu')
     plt.legend()
     plt.show()
+    e = y - yd
+    plt.figure(figsize=(10, 5))
+    plt.plot(t, e, label='e(t)', linestyle='--')
+    plt.xlabel('Czas t')
+    plt.ylabel('Uchyb')
+    plt.title('Symulacja układu równań stanu')
+    plt.legend()
+    plt.show()
+
 def zad2():
     g_kp = 75.5
     g_T = 1.61
