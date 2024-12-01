@@ -43,11 +43,12 @@ def zad32():
     C3 = 3
     R3 = 1
     
-    A = np.array([[-1/(R1*C1), 0, 0],[0, -1/(R2*C2), 0],[0, 0, -1/(R3*C3)]])
-    B = np.array([[1/(R1*C1)],[1/(R2*C2)],[1/(R3*C3)]])
+    A = np.array([[0, 1, 0],[0, 0, 1],[-1/6, 1, -11/6]])
+    
+    B = np.array([[0],[0],[1]])
 
     K = signal.place_poles(A, B, desired_poles).gain_matrix
-
+    print(simplify(characteristic_equation(A, B, K)))
     print(f'K vector: {K}')
 
 # Przeprowadzić symulację odpowiedzi obiektu na wymuszenie (11).
@@ -71,12 +72,12 @@ def zad33():
     #K = np.array([[10, 0, 0]])
     
     current_A = (A - B @ K)
+    print(f"Bieguny starej macierzy A:{np.linalg.eigvals(A)}")
     print(f"Bieguny nowej macierzy A: {np.linalg.eigvals(current_A)}") # Bieguny teraz są dokładnie w tym miejscu co chcieliśmy żeby były
     current_C = (C - D * K)
 
     SS_before = signal.StateSpace(A, B, C, D)
     SS_after = signal.StateSpace(current_A, B, current_C, 0)
-
     t,y = signal.step(SS_before)
     plt.plot(t,y)
     plt.show()
@@ -87,5 +88,5 @@ def zad33():
     # • Wpływają zgodnie z równaniem wyzmaczonym w zadaniu 3.1 (miejsca zerowe wielomianu to miejsca biegunów)
 
 if __name__ == "__main__":
-    zad31()    
+    zad33()    
    

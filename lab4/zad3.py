@@ -81,4 +81,5 @@ def zad2():
     plot_PID(calc_PD(g_kp, g_T))
     plot_PID(calc_PID(g_kp, g_T))
 
-zad2()
+#zad2()
+plot_PID((1000,66.8,158))

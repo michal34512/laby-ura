@@ -85,14 +85,14 @@ def simulate_PID(kp, ki, kd):
     x0 = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
 
     sol = odeint(model, x0, t)
-    i_ise = sol[:, 4]  # I_ISE
+    i_ise = sol[:, 7]  # I_ISE
 
     return i_ise[-1]
 
 def optimize_PID():
     kp_values = np.linspace(100, 100, 1)  # Możliwe wartości kp
-    ki_values = np.linspace(19, 24, 20)  # Możliwe wartości ki
-    kd_values = np.linspace(23, 28, 20)  # Możliwe wartości kd
+    ki_values = np.linspace(17, 21, 20)  # Możliwe wartości ki
+    kd_values = np.linspace(28, 32, 20)  # Możliwe wartości kd
     
     best_kp, best_ki, best_kd = 0, 0, 0
     best_ISE = float('inf')
@@ -184,4 +184,5 @@ def zad3():
     r = 0.01
     optimize_PID_opt(q, r)
     # print(simulate_PID_opt(calc_PID(g_kp, g_T), q, r))
-zad3()
+optimize_PID()
+plot_PID((100,  18.684210526315788, 30.94736842105263))
