@@ -243,7 +243,7 @@ def zad4(t_hor):
 
 
 
-zad4(1)
+zad3(np.eye(2)*100)
 
 
 ### DLA CHETNYCH - PLOT u -> dodac do sprawozdania
