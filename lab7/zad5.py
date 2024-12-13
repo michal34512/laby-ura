@@ -111,7 +111,60 @@ def zad2(u):
     plt.grid(True)
     plt.show()
 
-zad2(45*np.sqrt(2)+30)
+def zad3(u):
+    m = 9  # kg
+    l = 1  # m (długość wahadła)
+    d = 0.5  # Nms^2/rad^2 (damping)
+    g = 10  # m/s^2 (przyspieszenie grawitacyjne)
+    J = 1  # moment bezwładności
+    t = np.linspace(0, 20, 1000)
+    x0 = [np.pi / 4, 0]  # Początkowy kąt i prędkość
+    def model_nieliniowy(x, t):
+        x1, x2 = x
+        x1dot = x2
+        x2dot = (1 / J) * (u - d * x2 - (m * g * l * np.sin(x1)))
+        return [x1dot, x2dot]
+    res_nieliniowy = odeint(model_nieliniowy, x0, t)
+    theta_nieliniowy = res_nieliniowy[:, 0]
+    
+    def model_SDC(x, t):
+        x1, x2 = x
+        A = np.array([[0, 1], 
+                      [-(m * g * l * np.sin(x1)) / x1, -d / J]])
+        B = np.array([0, 1 / J])
+        dxdt = A @ x + B * u
+        return dxdt
+    res_SDC = odeint(model_SDC, x0, t)
+    theta_SDC = res_SDC[:, 0]
+    
+    # Wykresy
+    plt.figure(figsize=(10, 6))
+    plt.plot(t, theta_nieliniowy, label="Oryginalny model nieliniowy", linewidth=2)
+    plt.plot(t, theta_SDC, '--', label="Model SDC", linewidth=2)
+    plt.xlabel("Czas [s]")
+    plt.ylabel("Kąt [rad]")
+    plt.title("Porównanie odpowiedzi układu nieliniowego i SDC")
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+    # Analiza dla warunku początkowego x1(0)=0, x2(0)=0
+    x0_zero = [0, 0]
+    res_nieliniowy_zero = odeint(model_nieliniowy, x0_zero, t)
+    res_SDC_zero = odeint(model_SDC, x0_zero, t)
+    
+    plt.figure(figsize=(10, 6))
+    plt.plot(t, res_nieliniowy_zero[:, 0], label="Nieliniowy (x1(0)=0, x2(0)=0)", linewidth=2)
+    plt.plot(t, res_SDC_zero[:, 0], '--', label="SDC (x1(0)=0, x2(0)=0)", linewidth=2)
+    plt.xlabel("Czas [s]")
+    plt.ylabel("Kąt [rad]")
+    plt.title("Porównanie przy warunkach początkowych x1(0)=0, x2(0)=0")
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+zad2(45*np.sqrt(2)+2)
+#zad2(0)
 
 
 
