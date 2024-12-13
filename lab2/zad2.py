@@ -49,6 +49,20 @@ def plot_all_state_vars_Pinv(A,B, Pinv, utype = 0):
         plt.plot(t,y, label=f"x{i+1}")
     plt.legend()
     plt.show()
+def plot_all_state_vars(A,B,C, u = 1):
+    C = np.array(C)  
+    def model(x, t):
+        xdot = A @ x + B.flatten() * u
+        return xdot
+    t = np.linspace(0, 22, 1000)
+    x = odeint(model, [0, 0, 0], t)
+    y = x @ C.T 
+    plt.plot(t, x[:, 0], label='x1(t)')
+    plt.plot(t, x[:, 1], label='x2(t)')
+    plt.plot(t, x[:, 2], label='x3(t)')
+    plt.plot(t, y, label='y(t)')
+    plt.legend()
+    plt.show()
 
 def zad21_rys2():
     C1 = 1
@@ -65,9 +79,11 @@ def zad21_rys2():
     As = getAs(A)
     Bs = getBs(B)
     Pinv = getPinv(As, Bs, A, B)
-    plot_all_state_vars_Pinv(As, Bs, Pinv , utype = 0)
+    C = [[0.5, 1, 1.5]]
+    Cs = C @ Pinv
+    plot_all_state_vars(As, Bs, Cs)
     print(As)
-    plot_all_state_vars_Pinv(A, B, None, utype = 0)
+    plot_all_state_vars(A, B, C)
     # jest sterowalny
 
 def zad21_rys4():
