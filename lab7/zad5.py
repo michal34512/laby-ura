@@ -19,15 +19,11 @@ def zad1(u):
     y0 = [0, 0]
     
     # model nieliniowy
-    def model(x, t):
+    def lin_model(x, t):
             x1, x2 = x
             x1dot = x2
             x2dot = (1/J) * (u - d * x2 - (m * g * l * np.sin(x1)))
             return [x1dot, x2dot]
-    
-    res = odeint(model, y0, t)
-    theta = res[: , 0]
-    thetadot = res[:, 1]
     
     # model liniowy
     A = np.array([[0, 1],[-(m*g*l)/J, -d/J]])
@@ -35,13 +31,20 @@ def zad1(u):
     def model(x, t):
         xdot = A @ x + B.flatten() * u
         return xdot
-    y = odeint(model, y0, t)
     plt.figure(figsize=(10, 5))
-    plt.plot(t, y[:, 0], label='kat_liniowy(t)')
-    plt.plot(t, theta, label='kat_nielinowy')
+    u=5
+    y = odeint(model, y0, t)
+    y_lin = odeint(lin_model, y0, t)
+    plt.plot(t, y_lin[:, 0], label=r'$układ\ zlinearyzowany,\ u=5$', color='blue')
+    plt.plot(t, y[:, 0], label=r'$układ\ nieliniowy,\ u=5$', color=(0.5, 0.7, 1))
+    u=20
+    y = odeint(model, y0, t)
+    y_lin = odeint(lin_model, y0, t)
+    plt.plot(t, y_lin[:, 0], label=r'$układ\ zlinearyzowany,\ u=20$', color='red')
+    plt.plot(t, y[:, 0], label=r'$układ\ nieliniowy,\ u=20$', color=(1.0, 0.6, 0.6))
     plt.xlabel('Czas t')
-    plt.ylabel('theta(t)')
-    plt.title('Symulacja układu równań stanu')
+    plt.ylabel('x1(t)')
+    plt.title(r'$u(t) = 5, u(t) = 20$')
     plt.legend()
     plt.grid(True)
     plt.show()
@@ -84,9 +87,7 @@ def zad2(u):
             x2dot = (1/J) * (u - d * x2 - (m * g * l * np.sin(x1)))
             return [x1dot, x2dot]
     
-    res = odeint(model, x0, t)
-    theta = res[: , 0]
-    thetadot = res[:, 1]
+    # y = odeint(model, x0, t)
 
 
     # liniowy
@@ -95,18 +96,27 @@ def zad2(u):
 
     A = np.array([[0, 1],[-(m*g*l*np.sqrt(2))/(2*J), -d/J]])
     B = np.array([[0],[1/J]])
-    def model(xfala, t):
+    def lin_model(xfala, t):
         xfaladot = A @ xfala + B.flatten() * ufala
         return xfaladot
-    xfala = odeint(model, [0, 0], t)
-    x = xfala + x0
+    # y_lin = odeint(model, [0, 0], t) 
 
     plt.figure(figsize=(10, 5))
-    plt.plot(t, x[:, 0], label='kat_liniowy(t)')
-    plt.plot(t, theta, label='kat_nielinowy')
+    u = 45*np.sqrt(2)
+    ufala = u - u0
+    y = odeint(model, x0, t)
+    y_lin = odeint(lin_model, [0, 0], t) + x0
+    plt.plot(t, y_lin[:, 0], label=r'$układ\ zlinearyzowany\ u(t)=45\sqrt{2}$', color='green')  # Zielony
+    plt.plot(t, y[:, 0], label=r'$układ\ nieliniowy\ u(t)=45\sqrt{2}$', color=(0.3, 0.8, 0.3))  # Ciemniejszy jasnozielony
+    u = 45*np.sqrt(2) + 10
+    ufala = u - u0
+    y = odeint(model, x0, t)
+    y_lin = odeint(lin_model, [0, 0], t) + x0
+    plt.plot(t, y_lin[:, 0], label=r'$układ\ zlinearyzowany\ u(t)=45\sqrt{2}+10$', color='blue')  # Niebieski
+    plt.plot(t, y[:, 0], label=r'$układ\ nieliniowy\ u(t)=45\sqrt{2}+10$', color=(0.5, 0.7, 1))  # Jasnoniebieski
     plt.xlabel('Czas t')
-    plt.ylabel('theta(t)')
-    plt.title('Symulacja układu równań stanu')
+    plt.ylabel('x1(t)')
+    plt.title(r'$Symulacja\ układu\ zlinearyzowanego\ w\ punkcie\ x_0(\pi/4,0), u_0=45\sqrt{2}$')
     plt.legend()
     plt.grid(True)
     plt.show()
@@ -163,8 +173,7 @@ def zad3(u):
     plt.grid()
     plt.show()
 
-zad2(45*np.sqrt(2)+2)
-#zad2(0)
+zad1(5)
 
 
 

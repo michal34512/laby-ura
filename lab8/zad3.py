@@ -30,7 +30,7 @@ def zad1(u):
     plt.legend()
     plt.grid(True)
     plt.show()
-
+# zad1(1)
 
 def zad2(u):
     k = 3
@@ -61,7 +61,7 @@ def zad2(u):
     plt.legend()
     plt.grid(True)
     plt.show()
-#zad2(0)
+# zad2(0)
 
 def get_P_mat(A, B, t_end, Q, R, S):
     def riccati(p, t):
@@ -157,7 +157,7 @@ def zad3_fin(Q, R, S):
 # zad3_fin(np.eye(4) , np.array([[1]]), np.eye(4))
 # zad3_inf(np.eye(4) , np.array([[1]]))
 
-def zad4(Q, R, S, t_end, x0, u0=0):
+def zad4(Q, R, S, t_end, x0, u_approx=0):
     k = 3
     J1 = 0.04
     J2 = 0.3
@@ -176,28 +176,37 @@ def zad4(Q, R, S, t_end, x0, u0=0):
 
     finite_P_t = get_P_mat(A, B, t_end, Q, R, S) # finite
     infinite_K = get_K_mat(A, B, Q, R) # infinite
-    
+
+
+    saved_u = []
+    saved_t = []
     def finite_model(x, t):
         K_t = np.linalg.inv(R) @ (B.T @ finite_P_t(t))
-        u = -K_t @ (x - x0) + u0
+        u = -K_t @ (x - x_approx) + u_approx
         xdot = A @ x + B.flatten() * u
+        if t <= 10:
+            saved_u.append(u)
+            saved_t.append(t)
         return xdot
     
     def infinite_model(x, t):
-        u = -infinite_K @ (x - x0) + u0
+        u = -infinite_K @ (x - x_approx) + u_approx
         xdot = A @ x + B.flatten() * u
         return xdot
     
-    finite_x = odeint(finite_model, x0, t) + x0
-    infinite_x = odeint(infinite_model, x0, t) + x0
+    finite_x = odeint(finite_model, x0, t) + x_approx
+    infinite_x = odeint(infinite_model, x0, t) + x_approx
     plt.figure(figsize=(10, 5))
-    plt.plot(t, finite_x[:, 0], label='horyzont skończony')
-    plt.plot(t, infinite_x[:, 0], label='horyzont nieskończony')
+    plt.plot(t, finite_x[:, 0], label='pozycja ogniwa (hor. skończony)')
+    plt.plot(t, finite_x[:, 2], label='pozycja silnika (hor. skończony)')
+    plt.plot(saved_t, saved_u, label="u(t)")
+    # plt.plot(t, infinite_x[:, 0], label='pozycja ogniwa (hor. nieskończony)')
+    # plt.plot(t, infinite_x[:, 2], label='pozycja silnika (hor. nieskończony)')
     plt.xlabel('Czas t')
-    plt.ylabel('theta(t)')
-    plt.title('Symulacja układu równań stanu')
+    plt.ylabel('x1(t), x3(t)')
+    plt.title('Odpowiedź manipulatora z regulatorem LQR')
     plt.legend()
     plt.grid(True)
     plt.show()
 
-zad4(np.eye(4) , np.array([[1]]), np.eye(4), 5, np.array([np.pi, 0, np.pi/2, 0]))
+zad4(np.eye(4) , np.array([[1]]), np.eye(4)*100000, 1.5, np.array([np.pi, 0, np.pi/2, 0]))
